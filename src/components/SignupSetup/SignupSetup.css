@@ -1,0 +1,24 @@
+.signup__setup_input {
+  display: none;
+}
+
+.login__main_form_password_label {
+  position: relative;
+  color: #757575;
+  padding: 5px;
+  padding-left: 10px;
+}
+
+.login__main_form_password_label::after {
+  content: "Browse";
+  right: 0;
+  position: absolute;
+  border-left: 1px solid rgba(117, 117, 117, 0.8);
+  padding: 5px;
+  padding-top: 0;
+  padding-bottom: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+}
