@@ -11,6 +11,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   const [userEmail, setUserEmail] = useState("");
+  const [photoURL, setPhotoURL] = useState("");
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -23,19 +24,28 @@ function App() {
         var uid = user.uid;
         var providerData = user.providerData;
 
+        // console.log("displayName  ----> ", displayName);
+        // console.log("email  ----> ", email);
+        // console.log("emailVerified  ----> ", emailVerified);
+        // console.log("photoURL  ----> ", photoURL);
+        // console.log("isAnonymous  ----> ", isAnonymous);
+        // console.log("uid  ----> ", uid);
+        // console.log("providerData  ----> ", providerData);
+
         if (displayName) {
           setUserEmail(email);
+          setPhotoURL(photoURL);
         }
       } else {
         setUserEmail("");
-        console.log("Log Out");
+        // console.log("Log Out");
       }
     });
   });
   return (
     <div className="App">
       {userEmail ? (
-        <Chats />
+        <Chats photoURL={photoURL} userEmail={userEmail} />
       ) : (
         <Switch>
           <Route path="/" exact>
@@ -45,7 +55,7 @@ function App() {
             <Signup />
           </Route>
           <Route path="/signup/setup" exact>
-            <SignupSetup />
+            <SignupSetup userEmail={userEmail} />
           </Route>
         </Switch>
       )}

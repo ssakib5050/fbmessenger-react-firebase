@@ -22,3 +22,7 @@
   display: flex;
   align-items: center;
 }
+
+.login__main_form_login.active {
+  opacity: 0.7;
+}

@@ -1,29 +1,40 @@
 import React from "react";
 import "./Message.css";
 
-function Message({ id, message, profileImage, profileUsername, timestamp }) {
-  console.log(profileUsername);
-  const username = "test";
+function Message({
+  id,
+  message,
+  profileImage,
+  mainEmail,
+  profileEmail,
+  timestamp,
+}) {
+  // console.log(profileEmail);
+  // const username = "test";
 
   return (
     <>
       <div
         className={`leftMessage ${
-          username === profileUsername
+          mainEmail === profileEmail
             ? "leftMessage_rightMessage"
             : "flex-row-reverse"
         }`}
       >
         <div
           className={`leftMessage__message ${
-            username === profileUsername
+            mainEmail === profileEmail
               ? "leftMessage__message_rightMessage"
               : ""
           }`}
         >
           <p className="mb-0">{message}</p>
         </div>
-        <div className="leftMessage__img_wrap">
+        <div
+          className={`leftMessage__img_wrap ${
+            mainEmail === profileEmail ? "d-none" : ""
+          }`}
+        >
           <img src={profileImage} alt="" className="leftMessage__img" />
         </div>
       </div>

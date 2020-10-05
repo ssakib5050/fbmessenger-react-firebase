@@ -78,4 +78,13 @@
   background: #0099ff;
   color: #fff;
   margin-right: 5px;
+  min-height: 36px;
+}
+
+.chat__header {
+  border: 1px solid lightgray;
+  padding: 5px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
 }

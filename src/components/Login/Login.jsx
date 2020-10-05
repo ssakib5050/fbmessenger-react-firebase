@@ -19,8 +19,8 @@ function Login() {
     });
   };
   return (
-    <div className="container login__main_wrap dev">
-      <div className="dev login__main">
+    <div className="container login__main_wrap ">
+      <div className=" login__main">
         <form action="" className="login__main_form" onSubmit={loginHandle}>
           <img
             src="https://lh3.googleusercontent.com/rkBi-WHAI-dzkAIYjGBSMUToUoi6SWKoy9Fu7QybFb6KVOJweb51NNzokTtjod__MzA=s180"

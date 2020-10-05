@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 import "./SignupSetup.css";
 
 import { Link, useHistory } from "react-router-dom";
@@ -8,6 +9,7 @@ function SignupSetup() {
   const [fullName, setFullName] = useState("");
   const [profilePicture, setProfilePicture] = useState(null);
   const [signupSetupError, setSignupSetupError] = useState("");
+  const [signupSetuping, setSignupSetuping] = useState(false);
 
   const history = useHistory();
 
@@ -15,33 +17,54 @@ function SignupSetup() {
     e.preventDefault();
 
     setSignupSetupError("");
+    setSignupSetuping(true);
     if (fullName && profilePicture) {
-      console.log("Yesss");
+      const file = profilePicture;
+      const uploadTask = storage
+        .ref()
+
+        .child(`images/${uuidv4()}.${profilePicture.name}`)
+        .put(file);
+
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {},
+        (error) => {
+          setSignupSetupError("Sorry Something Went Wrong");
+          setSignupSetuping(false);
+        },
+        () => {
+          uploadTask.snapshot.ref.getDownloadURL().then((downloadUrl) => {
+            console.log(fullName);
+            const user = auth.currentUser;
+
+            user
+              .updateProfile({
+                displayName: fullName,
+                photoURL: downloadUrl,
+              })
+              .then(function () {
+                // Update successful.
+
+                window.location.replace("/");
+              })
+              .catch(function (error) {
+                // An error happened.
+                setSignupSetupError("Sorry Something went wrong");
+                setSignupSetuping(false);
+              });
+          });
+        }
+      );
     } else {
       setSignupSetupError("Enter Fullname & Upload Photo");
+      setSignupSetuping(false);
     }
-
-    // auth
-    //   .createUserWithEmailAndPassword(email, password)
-    //   .catch((error) => {
-    //     setSignupError(error.message);
-    //   })
-    //   .then(() => {
-    //     // console.log(email == true);
-    //     if (email && password) {
-    //       console.log("Not empty");
-    //       if (!signupError) {
-    //         history.push("/signup/setup");
-    //       }
-    //     } else {
-    //       console.log("empty");
-    //     }
-    //   });
   };
 
   return (
-    <div className="container login__main_wrap dev">
-      <div className="dev login__main">
+    <div className="container login__main_wrap ">
+      <div className=" login__main">
         <form
           action=""
           className="login__main_form"
@@ -79,11 +102,16 @@ function SignupSetup() {
             ""
           )}
           <div>
-            <button className="login__main_form_login" type="submit">
+            <button
+              className={`login__main_form_login ${
+                signupSetuping ? "active" : ""
+              }`}
+              type="submit"
+            >
               Continue
             </button>
 
-            <Link to="/" className=" login__main_form_signup">
+            <Link to="/" className="login__main_form_signup ">
               Back
             </Link>
           </div>
